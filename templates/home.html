@@ -1,0 +1,141 @@
+{% extends 'commons/main.template.html' %}
+{% block content %}
+
+<style>
+    .tab1{
+        margin: 10px;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        width: 96%;
+        margin: 10px;
+        /* margin-bottom: 10px; */
+    }
+    
+    .image {
+        flex: 1;
+        margin-right: 50px;
+    }
+    
+    .content {
+        flex: 7;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .title {
+        font-weight: bold;
+        /* margin-bottom: 15px; */
+    }
+    
+    .tags {
+        font-style: italic;
+        /* margin-bottom: 50px; */
+    }
+    
+    .time {
+        align-self: flex-end;
+        font-size: 12px;
+        color: gray;
+        position: relative;
+        /* left: -20px; */
+    }
+</style>
+
+<script>
+    
+    $(document).ready(function(){
+        $('#tab1').on('scroll', function() {
+            var currentTop = $(this).scrollTop();
+            if (currentTop > lastTop) {
+                $('#tabbar1').css('display', 'none')
+            } else {
+                $('#tabbar1').css('display', 'flex')
+            }
+            lastTop = currentTop;
+        });
+    });
+    var lastTop = $(window).scrollTop();
+</script>
+
+<div class="weui-tab">
+    <div class="weui-tab__bd">
+        <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+            {% for item in newMange %}
+            <div class="container" onclick="alert('您点击了:{{item.title}}')">
+                <div class="image">
+                    <!-- <img src="your_image_path.jpg" alt="Image"> -->
+                    
+                    <div style='width: 80px; height: 115px; border: 1px #000 solid;background-size: cover; background-image: url({{imageGet(item.thumb.fileServer, item.thumb.path)}});'></div>
+                </div>
+                <div class="content">
+                    <div class="title">[{{item.pagesCount}}P]{{item.title}}</div>
+                    <div class="tags">
+                        {% for category in item.categories %}
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_plain-default">{{category}}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="time">{{item.likesCount}} likes</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="tab2" class="weui-tab__bd-item">
+            <h1>页面二</h1>
+        </div>
+        <div id="tab3" class="weui-tab__bd-item">
+            {% for item in favoriteList %}
+            <div class="container" onclick="alert('您点击了:{{item.title}}')">
+                <div class="image">
+                    <!-- <img src="your_image_path.jpg" alt="Image"> -->
+                    
+                    <div style='width: 80px; height: 115px; border: 1px #000 solid;background-size: cover; background-image: url({{imageGet(item.thumb.fileServer, item.thumb.path)}});'></div>
+                </div>
+                <div class="content">
+                    <div class="title">[{{item.pagesCount}}P]{{item.title}}</div>
+                    <div class="tags">
+                        {% for category in item.categories %}
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_plain-default">{{category}}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="time">{{item.likesCount}} likes</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="tab4" class="weui-tab__bd-item">
+            <h1>页面四</h1>
+        </div>
+    </div>
+
+    <div id="tabbar1" class="weui-tabbar">
+        <a href="#tab1" class="weui-tabbar__item weui-bar__item--on">
+            <!-- <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span> -->
+            <div class="weui-tabbar__icon">
+                <i class="fa-solid fa-house"></i>
+            </div>
+            <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="#tab2" class="weui-tabbar__item">
+            <div class="weui-tabbar__icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <p class="weui-tabbar__label">分类</p>
+        </a>
+        <a href="#tab3" class="weui-tabbar__item">
+            <div class="weui-tabbar__icon">
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="weui-tabbar__label">收藏</p>
+        </a>
+        <a href="#tab4" class="weui-tabbar__item">
+            <div class="weui-tabbar__icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <p class="weui-tabbar__label">我</p>
+        </a>
+    </div>
+</div>
+{% endblock content %}

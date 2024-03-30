@@ -1,0 +1,70 @@
+{% extends 'commons/main.template.html' %}
+{% block content %}
+<style>
+    .demos-header {
+        padding: 35px 0;
+    }
+
+    .demos-title {
+        text-align: center;
+        font-size: 34px;
+        color: #3cc51f;
+        font-weight: 400;
+        margin: 0 15%;
+    }
+</style>
+<script>
+    $().ready(function(){
+        $('#login').click(function(){
+            $.ajax({
+                url: "/login",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    email: $('#email').val(),
+                    password: $('#password').val()
+                }),
+                success: function(data) {
+                    if(data.status == -1)
+                        $.toast('邮箱为空!', 'forbidden')
+                    else if(data.status == -2)
+                        $.toast('密码为空!', 'forbidden')
+                    else if(data.status == -3)
+                        $.toast('用户名密码错误!', 'forbidden')
+                    else{
+                        $.toast('登录成功!')
+                        window.location.href='/'
+                    }
+
+                }
+            });
+        })
+    })
+</script>
+
+<header class='demos-header'>
+    <h1 class="demos-title">PicaACG for Kindle</h1>
+</header>
+
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">Email</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="email" placeholder="请输入邮箱">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">密码</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="password" id="password" placeholder="请输入密码">
+        </div>
+    </div>
+    <div class="weui-btn-area">
+        <a href="javascript:void(0)" id="login" class="weui-btn weui-btn_primary">登入</a>
+    </div>
+</div>
+{% endblock content %}
