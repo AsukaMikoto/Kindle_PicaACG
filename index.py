@@ -10,14 +10,14 @@ app.secret_key = PICA_API_KEY
 ## custom filter
 # image get
 def imageGet(url, uri):
-    if str(url).find('https://storage1.picacomic.com')!=-1:
-        picUrl = '{}/{}'.format(str(url).replace('https://storage1.picacomic.com', 'https://storage1.picacomic.com/static'), uri)
-
-    if str(uri).find('tobeimg/')!=-1:
-        url = 'https://img.picacomic.com'
-        picUrl = '{}/{}'.format(url, str(uri).replace('tobeimg/', ''))
+    if str(url).find('storage1.picacomic.com')!=-1:
+        picUrl = '{}/{}'.format(str(url).replace('storage1.picacomic.com', 'storage1.picacomic.com/static'), uri)
     else:
-        picUrl = '{}/{}'.format(url, str(uri).replace('tobs/', 'static/'))
+        if str(uri).find('tobeimg/')!=-1:
+            url = 'https://img.picacomic.com'
+            picUrl = '{}/{}'.format(url, str(uri).replace('tobeimg/', ''))
+        else:
+            picUrl = '{}/{}'.format(url, str(uri).replace('tobs/', 'static/'))
     print(picUrl)
     headers = {'host': str(url).replace('https://','')}
     response = httpGet(picUrl, headers)
